@@ -1,4 +1,4 @@
-defmodule GuessingGame do
+defmodule GuessingGameD do
   @moduledoc """
   Documentation for `GuessingGame`.
   """
@@ -10,7 +10,6 @@ defmodule GuessingGame do
   ## Examples
 
       iex> GuessingGame.genNumber()
-      99
 
   """
   def genNumber do
@@ -57,6 +56,7 @@ defmodule GuessingGame do
     false
   end
 
+  @spec tryNumber(number()) :: no_return()
   def tryNumber(rightNumber) do
     {triedNumber,_} = IO.gets("What's the number?") |> Integer.parse()
 
@@ -70,6 +70,7 @@ defmodule GuessingGame do
     end
   end
 
+  @spec play :: no_return()
   def play do
     rightNumber = genNumber()
     IO.puts("I'm thinking of a number between 0 and 100.")

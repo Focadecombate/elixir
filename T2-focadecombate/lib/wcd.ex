@@ -1,4 +1,4 @@
-defmodule WordCount do
+defmodule WordCountD do
   @spec readFile(String.t()) :: no_return()
   def readFile(fileName) do
     try do

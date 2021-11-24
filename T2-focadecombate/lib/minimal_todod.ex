@@ -1,4 +1,4 @@
-defmodule MinimalTodo do
+defmodule MinimalTodoD do
   @spec start() :: no_return()
   def start do
     filename = IO.gets("Please type the filename \n") |> String.trim()
@@ -24,19 +24,16 @@ defmodule MinimalTodo do
     end
   end
 
-  @spec parse(String.t()) :: String.t()
   def parse(body) do
     [header | lines] = String.split(body, ~r(\r\n|\r|\n))
     titles = tl(csvSplit(header))
     parseLine(lines, titles)
   end
 
-  @spec csvSplit(String.t()) :: String.t()[]
   def csvSplit(text) do
     String.split(text, ",")
   end
 
-  @spec sameSize(Enum.t(), Enum.t()) :: number()
   def sameSize(left, right) do
     Enum.count(left) === Enum.count(right)
   end
@@ -55,7 +52,6 @@ defmodule MinimalTodo do
     end)
   end
 
-  @spec getNextCommand(map) :: function()
   def getNextCommand(data) do
     prompt = "a) Add, r) Read, d) Delete, l) Load, s) Save ou q) Sair "
 
@@ -89,7 +85,7 @@ defmodule MinimalTodo do
     end
   end
 
-  @spec fieldsFromUser(String.t()) :: map()
+  @spec fieldsFromUser(any) :: {any, binary}
   def fieldsFromUser(name) do
     field = IO.gets("Enter the #{name} of the task:") |> String.trim()
 
@@ -98,7 +94,7 @@ defmodule MinimalTodo do
     end
   end
 
-  @spec getFields(String.t()) :: String.t()[]
+  @spec getFields(map) :: list
   def getFields(data) do
     data[hd(Map.keys(data))] |> Map.keys()
   end
@@ -115,7 +111,7 @@ defmodule MinimalTodo do
     end
   end
 
-  @spec addTodo(map()) :: fun()
+  @spec addTodo(map) :: nil | <<_::64>>
   def addTodo(data) do
     todoName = getTodoName(data)
 
@@ -130,7 +126,7 @@ defmodule MinimalTodo do
     getNextCommand(newData)
   end
 
-  @spec readTodo(map(),boolean()) :: fun()
+  @spec readTodo(map, any) :: nil | <<_::64>>
   def readTodo(data, next_command? \\ true) do
     items = Map.keys(data)
     IO.puts("You have the following todos:")
@@ -142,7 +138,7 @@ defmodule MinimalTodo do
     end
   end
 
-  @spec deleteTodo(map()) :: fun()
+  @spec deleteTodo(map) :: nil | <<_::64>>
   def deleteTodo(data) do
     todo = IO.gets("Enter the todo to delete:") |> String.trim()
 
@@ -157,12 +153,13 @@ defmodule MinimalTodo do
     end
   end
 
-  @spec loadTodo(map()) :: map()
+  @spec loadTodo(map) :: MapSet.t()
   def loadTodo(data) do
     filename = IO.gets("Enter the filename to load:") |> String.trim()
     newData = readArchive(filename, false)
 
-    Map.merge(data, newData)
+    merged = Map.merge(data, newData)
+    merged
   end
 
   @spec prepareCsv(map()) :: String.t()

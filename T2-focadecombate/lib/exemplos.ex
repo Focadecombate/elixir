@@ -10,17 +10,17 @@ defmodule Rectangle do
   end
 
   # Exemplo de função privada
-  defp diagonal(x, y) do
-    Math.sqrt(x*x + y*y)
-  end
+  #defp diagonal(x, y) do
+   # Math.sqrt(x*x + y*y)
+  #end
 
 end
 
 # Exemplo de função anonima
-circle_area = fn (r) -> 3.1415*r*r end
+_circle_area = fn (r) -> 3.1415*r*r end
 
 # pattern Matching
-handleFileError = fn
+_handleFileError = fn
   {:ok, data} -> IO.puts "Handling result...#{data}"
   {:error, reason} -> IO.puts "An error has occurred! #{reason}"
 end
